@@ -9,11 +9,15 @@ def calc_container(*args):
                 padding_x="1rem",
                 padding_top="1rem",
                 color_scheme="gray",
-                bg="gray",
+                size='3',
+                align='right'
             ),
             side="top",
             pb="current",
         ),
-        rx.vstack(args),
-        size="3",
+        rx.vstack(
+            args,
+            justify='end'
+        ),
+        size="2",
     )
