@@ -8,9 +8,9 @@ To use **reflex**, you need to Create a new virtual environment in python and in
 
 ### a. Create a virtual environment
 
-In python is recommended to use virtual environments if you are working on a new project, this is allows you to have a copy of the libraries that you are using on your project.
+In python is recommended to use virtual environments if you are working on a new project, this allows you to have a copy of the libraries that you are using on your project.
 
-Every package that you install in the virtual environment is only in the directory that working on and it's not installed globally on your computer.
+Every package that you install in the virtual environment is only in the directory that you are working on and it's not installed globally on your computer.
 
 - Execute this command to create a new virtual environment
   ```bash
@@ -159,19 +159,19 @@ Here is how you directory structure is right now
 
 ## 4. Create your first component
 
-Just like React or any javascript framework, in reflex you can make your own components but using 100% python.
+Just like React or any javascript framework, in **REFLEX** you can make your own components but using 100% python.
 
 Let's create our first component to make a calculator.
 
 - In `components` folder create a new folder called `calculator`.
-- Create `container.py` file, this component is the container to wrap the calculator screen and buttons on it.
+- Create `container.py` file, here is the component to wrap the calculator screen and buttons on a container.
 - Create `calculator.py`. This file will be used to call the parent component
 
 ```bash
 ├── components
     ├── calculator
-        calculator.py
-        container.py
+        ├── calculator.py
+        ├── container.py
 ```
 
 ### a. Container component
@@ -190,7 +190,8 @@ def calc_container(*args): # *args is used to accept as many parameters as you w
                 padding_x="1rem",
                 padding_top="1rem",
                 color_scheme="gray",
-                bg="gray",
+                size='3'
+                align="right",
             ),
             side="top",
             pb="current",
@@ -222,9 +223,9 @@ def calculator():
 ```
 
 ### c. Import Parent Component
-To use your component you have must import it into the page you are going to use it on.
+To use your component you must hace to import it into the page you are going to use it on.
 
-* Import on ``pages/index.py``.
+* Import in ``pages/index.py``.
     ```python
     ...
     from ..components.calculator.calculator import calculator
@@ -236,3 +237,50 @@ To use your component you have must import it into the page you are going to use
             ...
         )
     ```
+    ![calculator-preview](screenshots/claculator_preview1.png)
+
+## 5. Create Children Components
+Ahora que ya esta creado un pequeño boceto de nuestra aplicacion es necesario añadir un poco de estilos algo más de estética a nuestro componente.
+
+Vamos a crear un componente para los botones de la calculadora que sera una plantilla para crear nuevos botones.
+
+En la ``components/calculator`` crea un archivo llamado ``buttons.py``
+
+```python
+import reflex as rx
+
+def number_button(number:str, on_click=None): # on_click por defecto es nulo, despues agregaremos un evento a los botones
+    return rx.button(
+        number,
+        color_scheme='gray', # para algunos componentes, reflex permite personalizarlos sin usar css
+        on_click=on_click # el parametro on click se utiliza para añadir un evento al botón
+    )
+
+def operation_button(icon_name:str, on_click=None):
+    return rx.icon_button(
+        icon_name,
+        color_scheme='orange',
+        on_click=on_click
+    )
+```
+
+En ``calculator.py`` importaremos los botones nuevos y los agregaremos al componente principal.
+```python
+import reflex as rx
+from .container import calc_container
+from .buttons import number_button, operation_button
+
+def calculator():
+    return calc_container(
+        rx.hstack(
+            number_button('1'),
+            number_button('2'),
+            number_button('3'),
+            operation_button('plus')
+        ),
+    )
+```
+
+Ahora nuestra calculadora se ve asi:
+
+![calculator-preview](screenshots/calculator_preview2.png)
