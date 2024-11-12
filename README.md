@@ -40,3 +40,13 @@ reflex init
 ```
 * Select option 0 (press enter) to use  a blank template.
 ![reflex-init](/screenshots/image-1.png)
+
+This create a project with the following directory structure
+
+```
+├── assets 
+├── rxconfig.py
+├── reflex_calcultor
+    ├── __init__.py
+    ├── reflex_calcultor.py
+```
